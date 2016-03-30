@@ -66,7 +66,6 @@ function putRandomImagesOnDOM(){
     possibleChoiceBoxes[i].setAttribute('id', imageObjectsArray[randomizer].myID);
     imageObjectsArray[randomizer].iWasDisplayed();
   }
-
 }
 putRandomImagesOnDOM();
 //The function above is for populating the DOM with the images
