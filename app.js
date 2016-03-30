@@ -23,6 +23,8 @@ MakeImageObject.prototype.giveMeID = function(){
   this.myID = this.name.split(' ').join('').toLowerCase();
 };
 // make methods above here...
+
+//Data input below...
 imageObjectsArray.push(bag = new MakeImageObject('R2-D2 Luggage', 'img/bag.jpg'));
 imageObjectsArray.push(banana = new MakeImageObject('Banana Slicer', 'img/banana.jpg'));
 imageObjectsArray.push(bathroom = new MakeImageObject('iPad TP Roll', 'img/bathroom.jpg'));
@@ -43,7 +45,9 @@ imageObjectsArray.push(unicorn = new MakeImageObject('Canned Unicorn Meat', 'img
 imageObjectsArray.push(usb = new MakeImageObject('Dragon Tail USB', 'img/usb.gif'));
 imageObjectsArray.push(waterCan = new MakeImageObject('Pointless Watering Can', 'img/water-can.jpg'));
 imageObjectsArray.push(wineGlass = new MakeImageObject('Terrible Wine Glass', 'img/wine-glass.jpg'));
+//Data input above...
 
+//Call method to add ID to all image objects below here, using for loop
 function giveAllImageObjectsID(){
   for (var i = 0; i < imageObjectsArray.length; i++){
     imageObjectsArray[i].giveMeID();
@@ -51,6 +55,7 @@ function giveAllImageObjectsID(){
 }
 giveAllImageObjectsID();
 
+//set variable for array of 3 images
 possibleChoiceBoxes = document.getElementsByClassName('possibleChoiceBox');
 
 //The function below is for populating the DOM with the images
@@ -68,30 +73,29 @@ putRandomImagesOnDOM();
 
 //Click-event handler below
 function handleImageClick(event){
+  //Add up total clicks. All the clicks in the world
   totalClicks++;
-  // var imgL = document.getElementsByClassName('imageLeft')[0];
-  // var imgC = document.getElementsByClassName('imageCenter')[0];
-  // var imgR = document.getElementsByClassName('imageRight')[0];
 
-  //Register clicks below
+  //Register individual item clicks below
   for (var i = 0; i < imageObjectsArray.length; i++){
     if (event.target.id === imageObjectsArray[i].myID){
       imageObjectsArray[i].iWasClicked();
     }
   }
-  //Register clicks above
-
-
+  //Register individual item clicks above
 
   //Log clicks and display count below
   for (var i = 0; i < imageObjectsArray.length; i++){
     console.log(imageObjectsArray[i].name + ' has been displayed ' + imageObjectsArray[i].timesDisplayed + ' and clicked ' + imageObjectsArray[i].timesClicked + '.');
   }
+
+  console.log('Total clicks: ' + totalClicks);
   putRandomImagesOnDOM();
 
 }
 //Click-event handler above
 
+//adding event listener for all 3 images in array created on line `59`
 for (var i = 0; i < possibleChoiceBoxes.length; i++) {
   possibleChoiceBoxes[i].addEventListener('click', handleImageClick);
 }
