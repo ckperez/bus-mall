@@ -8,7 +8,6 @@ function MakeImageObject(name, filePath) {
   this.filePath = filePath;
   this.timesDisplayed = 0;
   this.timesClicked = 0;
-  this.myID = '';
 }
 // make methods below here...
 MakeImageObject.prototype.iWasClicked = function(){
@@ -89,8 +88,36 @@ function handleImageClick(event){
   }
 
   console.log('Total clicks: ' + totalClicks);
+
   putRandomImagesOnDOM();
 
+  if (totalClicks === 5) {
+    var continueForm = document.createElement('form');
+    continueForm.setAttribute('id', 'continueForm');
+    var continueFormFieldset = document.createElement('fieldset');
+    continueFormFieldset.setAttribute('id', 'continueFormFieldset');
+    continueForm.appendChild(continueFormFieldset);
+    var continueFormLegend = document.createElement('legend');
+    continueFormLegend.setAttribute('id', 'continueFormLegend');
+    continueFormLegend.textContent = 'You have made 25 selections. Would you like to continue playing or see your selection data?';
+    continueFormFieldset.appendChild(continueFormLegend);
+    var moreButton = document.createElement('button');
+    moreButton.setAttribute('id', 'moreButton');
+    moreButton.setAttribute('type', 'button');
+    moreButton.textContent = 'More Selections';
+    continueFormFieldset.appendChild(moreButton);
+    var dataButton = document.createElement('button');
+    dataButton.setAttribute('id', 'dataButton');
+    dataButton.setAttribute('type', 'button');
+    dataButton.textContent = 'See Data';
+    continueFormFieldset.appendChild(dataButton);
+    var mainArea = document.getElementById('mainArea');
+    mainArea.appendChild(continueForm);
+    var imageBoxesForStyling = document.getElementsByClassName('possibleChoiceBox');
+    for (var i = 0; imageBoxesForStyling.length; i++){
+      imageBoxesForStyling[i].style.display = 'none';
+    }
+  }
 }
 //Click-event handler above
 
@@ -98,3 +125,16 @@ function handleImageClick(event){
 for (var i = 0; i < possibleChoiceBoxes.length; i++) {
   possibleChoiceBoxes[i].addEventListener('click', handleImageClick);
 }
+
+
+// function handleKeepPlaying(event){
+//   document.getElementById('continueForm').style.display = 'none';
+//
+//
+//
+//
+// }
+//
+// var moreSelections = document.getElementById('moreButton');
+//
+// moreSelections.addEventListener('click', handleKeepPlaying);
