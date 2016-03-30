@@ -106,17 +106,26 @@ function handleImageClick(event){
     moreButton.setAttribute('type', 'button');
     moreButton.textContent = 'More Selections';
     continueFormFieldset.appendChild(moreButton);
+    moreButton.addEventListener('click', handleKeepPlaying);
     var dataButton = document.createElement('button');
     dataButton.setAttribute('id', 'dataButton');
     dataButton.setAttribute('type', 'button');
     dataButton.textContent = 'See Data';
     continueFormFieldset.appendChild(dataButton);
+    dataButton.addEventListener('click', handleSeeData);
     var mainArea = document.getElementById('mainArea');
     mainArea.appendChild(continueForm);
     var imageBoxesForStyling = document.getElementsByClassName('possibleChoiceBox');
-    for (var i = 0; imageBoxesForStyling.length; i++){
+    for (var i = 0; i < imageBoxesForStyling.length; i++){
       imageBoxesForStyling[i].style.display = 'none';
     }
+  }
+  if (totalClicks === 10){
+    var imageBoxesForStyling = document.getElementsByClassName('possibleChoiceBox');
+    for (var i = 0; i < imageBoxesForStyling.length; i++){
+      imageBoxesForStyling[i].style.display = 'none';
+    }
+    //showData()************************************
   }
 }
 //Click-event handler above
@@ -126,15 +135,28 @@ for (var i = 0; i < possibleChoiceBoxes.length; i++) {
   possibleChoiceBoxes[i].addEventListener('click', handleImageClick);
 }
 
+//...
+function handleKeepPlaying(event){
+  document.getElementById('continueForm').style.display = 'none';
+  var imageBoxesForStyling = document.getElementsByClassName('possibleChoiceBox');
+  for (var i = 0; i < imageBoxesForStyling.length; i++){
+    imageBoxesForStyling[i].style.display = 'inline';
+  }
+}
+//...
+function handleSeeData(event){
+  document.getElementById('continueForm').style.display = 'none';
+  //showData***************************************
+}
 
-// function handleKeepPlaying(event){
-//   document.getElementById('continueForm').style.display = 'none';
-//
-//
-//
-//
-// }
-//
-// var moreSelections = document.getElementById('moreButton');
-//
-// moreSelections.addEventListener('click', handleKeepPlaying);
+
+//...
+function showData(){
+  var mainArea = document.getElementById('mainArea');
+  var chartCanvas = document.createElement('canvas');
+  chartCanvas.setAttribute('id', 'chartCanvas');
+  chartCanvas.setAttribute('width', '960');
+  chartCanvas.setAttribute('height', '640');
+  mainArea.appendChild(chartCanvas);
+
+}
