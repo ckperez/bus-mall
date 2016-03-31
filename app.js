@@ -67,13 +67,13 @@ putNamesInLabelsArray();
 
 function putIndividualClicksInArray(){
   for (var i = 0; i < imageObjectsArray.length; i++){
-    historicalIndividualClicks.push(imageObjectsArray[i].timesClicked);
+    historicalIndividualClicks[i] = imageObjectsArray[i].timesClicked;
   }
 }
 
 function putIndividualDisplaysInArray(){
   for (var i = 0; i < imageObjectsArray.length; i++){
-    historicalIndividualDisplays.push(imageObjectsArray[i].timesDisplayed);
+    historicalIndividualDisplays[i] = (imageObjectsArray[i].timesDisplayed);
   }
 }
 
@@ -82,7 +82,7 @@ function makePercentageArray(){
     if (imageObjectsArray[i].timesDisplayed === 0){
       clickPercentageArray.push(0);
     } else {
-      clickPercentageArray.push((imageObjectsArray[i].timesClicked / imageObjectsArray[i].timesDisplayed) * 100);
+      clickPercentageArray.push((historicalIndividualClicks[i] / historicalIndividualDisplays[i]) * 100);
     }
   }
 }
@@ -141,7 +141,7 @@ function handleImageClick(event){
 
   putRandomImagesOnDOM();
 
-  if (totalClicks === 25) {
+  if (totalClicks === 10) {
     putIndividualClicksInArray();
     putIndividualDisplaysInArray();
     var continueForm = document.createElement('form');
@@ -171,11 +171,12 @@ function handleImageClick(event){
     removingEventListenerForTheImages();
   }
 
-  if (totalClicks === 35){
+  if (totalClicks === 15){
     putIndividualClicksInArray();
     putIndividualDisplaysInArray();
     showData();
   }
+  saveRecordsToLocStorage();
 }
 //Click-event handler above
 
@@ -195,8 +196,9 @@ function removingEventListenerForTheImages() {
 
 //...
 function handleKeepPlaying(event){
-  addingEventListenerForTheImages();
-
+  if (totalClicks < 15){
+    addingEventListenerForTheImages();
+  }
 }
 //...
 function handleSeeData(event){
@@ -205,6 +207,9 @@ function handleSeeData(event){
 
 //...
 function showData(){
+  grabRecordsFromLocStorage();
+  saveRecordsToLocStorage();
+
   removingEventListenerForTheImages();
   makePercentageArray();
   var mainArea = document.getElementById('mainArea');
@@ -268,3 +273,5 @@ function grabRecordsFromLocStorage(){
     historicalIndividualDisplays = plop(historicalIndividualDisplays, displayRecords);
   }
 }
+
+putRandomImagesOnDOM();
