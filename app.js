@@ -87,6 +87,14 @@ function makePercentageArray(){
   }
 }
 
+function plop(firstArray, secondArray){
+  var ploppedArray = [];
+  for (var i = 0; i < firstArray.length; i++){
+    ploppedArray.push(firstArray[i] + secondArray[i]);
+  }
+  return ploppedArray;
+}
+
 //set variable for array of 3 images
 possibleChoiceBoxes = document.getElementsByClassName('possibleChoiceBox');
 
@@ -240,4 +248,23 @@ function showData(){
     ]
   };
   var myChart = new Chart(context).Bar(data);
+}
+
+function saveRecordsToLocStorage(){
+  localStorage.setItem('clickRecords', JSON.stringify(historicalIndividualClicks));
+  localStorage.setItem('displayRecords', JSON.stringify(historicalIndividualDisplays));
+}
+
+function grabRecordsFromLocStorage(){
+  var clickRecords = JSON.parse(localStorage.getItem('clickRecords'));
+
+  if (clickRecords){
+    historicalIndividualClicks = plop(historicalIndividualClicks, clickRecords);
+  }
+
+  var displayRecords = JSON.parse(localStorage.getItem('displayRecords'));
+
+  if (displayRecords){
+    historicalIndividualDisplays = plop(historicalIndividualDisplays, displayRecords);
+  }
 }
