@@ -95,6 +95,32 @@ function plop(firstArray, secondArray){
   return ploppedArray;
 }
 
+function saveRecordsToLocStorage(){
+  localStorage.setItem('clickRecords', JSON.stringify(historicalIndividualClicks));
+  localStorage.setItem('displayRecords', JSON.stringify(historicalIndividualDisplays));
+  console.log('saved my arrays of clicks and displays');
+}
+
+function grabRecordsFromLocStorage(){
+  var clickRecords = JSON.parse(localStorage.getItem('clickRecords'));
+  console.log('clickRecords:', clickRecords);
+  if (clickRecords){
+    clickRecords = plop(historicalIndividualClicks, clickRecords);
+    console.log('called my plop function on clicks: ', historicalIndividualClicks);
+  } else {
+    clickRecords = historicalIndividualClicks;
+  }
+
+  var displayRecords = JSON.parse(localStorage.getItem('displayRecords'));
+  console.log('displayRecords:', displayRecords);
+  if (displayRecords){
+    displayRecords = plop(historicalIndividualDisplays, displayRecords);
+    console.log('called my plop function on displays: ', historicalIndividualDisplays);
+  } else {
+    displayRecords = historicalIndividualDisplays;
+  }
+}
+
 //set variable for array of 3 images
 possibleChoiceBoxes = document.getElementsByClassName('possibleChoiceBox');
 
@@ -133,15 +159,15 @@ function handleImageClick(event){
   //Register individual item clicks above
 
   //Log clicks and display count below
-  for (var i = 0; i < imageObjectsArray.length; i++){
-    console.log(imageObjectsArray[i].name + ' has been displayed ' + imageObjectsArray[i].timesDisplayed + ' and clicked ' + imageObjectsArray[i].timesClicked + '.');
-  }
+  // for (var i = 0; i < imageObjectsArray.length; i++){
+  //   console.log(imageObjectsArray[i].name + ' has been displayed ' + imageObjectsArray[i].timesDisplayed + ' and clicked ' + imageObjectsArray[i].timesClicked + '.');
+  // }
 
-  console.log('Total clicks: ' + totalClicks);
+  //console.log('Total clicks: ' + totalClicks);
 
   putRandomImagesOnDOM();
 
-  if (totalClicks === 25) {
+  if (totalClicks === 5) {
     putIndividualClicksInArray();
     putIndividualDisplaysInArray();
     var continueForm = document.createElement('form');
@@ -151,7 +177,7 @@ function handleImageClick(event){
     continueForm.appendChild(continueFormFieldset);
     var continueFormLegend = document.createElement('legend');
     continueFormLegend.setAttribute('id', 'continueFormLegend');
-    continueFormLegend.textContent = 'You have made 25 selections. Would you like to continue playing or see your selection data?';
+    continueFormLegend.textContent = 'You have made ' + totalClicks + ' selections. Would you like to continue playing or see your selection data?';
     continueFormFieldset.appendChild(continueFormLegend);
     var moreButton = document.createElement('button');
     moreButton.setAttribute('id', 'moreButton');
@@ -169,11 +195,15 @@ function handleImageClick(event){
     var parentDiv = img1.parentNode;
     parentDiv.insertBefore(continueForm, img1);
     removingEventListenerForTheImages();
+    grabRecordsFromLocStorage();
+    saveRecordsToLocStorage();
   }
 
-  if (totalClicks === 35){
-    putIndividualClicksInArray();
-    putIndividualDisplaysInArray();
+  if (totalClicks === 10){
+    grabRecordsFromLocStorage();
+    saveRecordsToLocStorage();
+    //putIndividualClicksInArray();
+    //putIndividualDisplaysInArray();
     showData();
   }
 }
@@ -194,17 +224,21 @@ function removingEventListenerForTheImages() {
 }
 
 //...
-function handleKeepPlaying(event){
-  addingEventListenerForTheImages();
+function handleKeepPlaying(){
+  if (totalClicks < 10){
+    addingEventListenerForTheImages();
+  }
 
 }
 //...
-function handleSeeData(event){
+function handleSeeData(){
   showData();
 }
 
 //...
 function showData(){
+  grabRecordsFromLocStorage();
+  saveRecordsToLocStorage();
   removingEventListenerForTheImages();
   makePercentageArray();
   var mainArea = document.getElementById('mainArea');
@@ -248,23 +282,4 @@ function showData(){
     ]
   };
   var myChart = new Chart(context).Bar(data);
-}
-
-function saveRecordsToLocStorage(){
-  localStorage.setItem('clickRecords', JSON.stringify(historicalIndividualClicks));
-  localStorage.setItem('displayRecords', JSON.stringify(historicalIndividualDisplays));
-}
-
-function grabRecordsFromLocStorage(){
-  var clickRecords = JSON.parse(localStorage.getItem('clickRecords'));
-
-  if (clickRecords){
-    historicalIndividualClicks = plop(historicalIndividualClicks, clickRecords);
-  }
-
-  var displayRecords = JSON.parse(localStorage.getItem('displayRecords'));
-
-  if (displayRecords){
-    historicalIndividualDisplays = plop(historicalIndividualDisplays, displayRecords);
-  }
 }
