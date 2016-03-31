@@ -1,15 +1,19 @@
-.container {
-  display: flex;
-  width: 100%;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  align-content: center;
-  margin: 0 auto;
+header {
+  margin: auto;
+  margin-top: 40px;
+  text-align: center;
 }
 
-.possibleChoiceBox {
-  width:25%;
-  border-radius: 10%;
-  border: 2px solid green;
+.containerBox {
+  margin: auto;
+  width:960px;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+img {
+  width: 300px;
+  margin: 0px;
+  border: 2px solid #ACCFCC;
+  border-radius: 25px;
 }

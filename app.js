@@ -157,46 +157,47 @@ function handleImageClick(event){
     dataButton.textContent = 'See Data';
     continueFormFieldset.appendChild(dataButton);
     dataButton.addEventListener('click', handleSeeData);
-    var mainArea = document.getElementById('mainArea');
-    mainArea.appendChild(continueForm);
-    var imageBoxesForStyling = document.getElementsByClassName('possibleChoiceBox');
-    for (var i = 0; i < imageBoxesForStyling.length; i++){
-      imageBoxesForStyling[i].style.display = 'none';
-    }
+    var img1 = document.getElementsByClassName('possibleChoiceBox')[0];
+    var parentDiv = img1.parentNode;
+    parentDiv.insertBefore(continueForm, img1);
+    removingEventListenerForTheImages();
   }
+
   if (totalClicks === 35){
     putIndividualClicksInArray();
     putIndividualDisplaysInArray();
-    var imageBoxesForStyling = document.getElementsByClassName('possibleChoiceBox');
-    for (var i = 0; i < imageBoxesForStyling.length; i++){
-      imageBoxesForStyling[i].style.display = 'none';
-    }
     showData();
   }
 }
 //Click-event handler above
 
 //adding event listener for all 3 images in array created above putRandomImagesOnDOM definition
-for (var i = 0; i < possibleChoiceBoxes.length; i++) {
-  possibleChoiceBoxes[i].addEventListener('click', handleImageClick);
+function addingEventListenerForTheImages() {
+  for (var i = 0; i < possibleChoiceBoxes.length; i++) {
+    possibleChoiceBoxes[i].addEventListener('click', handleImageClick);
+  }
+}
+addingEventListenerForTheImages();
+
+function removingEventListenerForTheImages() {
+  for (var i = 0; i < possibleChoiceBoxes.length; i++) {
+    possibleChoiceBoxes[i].removeEventListener('click', handleImageClick);
+  }
 }
 
 //...
 function handleKeepPlaying(event){
-  document.getElementById('continueForm').style.display = 'none';
-  var imageBoxesForStyling = document.getElementsByClassName('possibleChoiceBox');
-  for (var i = 0; i < imageBoxesForStyling.length; i++){
-    imageBoxesForStyling[i].style.display = 'inline';
-  }
+  addingEventListenerForTheImages();
+
 }
 //...
 function handleSeeData(event){
-  //document.getElementById('continueForm').style.display = 'none';
   showData();
 }
 
 //...
 function showData(){
+  removingEventListenerForTheImages();
   makePercentageArray();
   var mainArea = document.getElementById('mainArea');
   var chartCanvas = document.createElement('canvas');
