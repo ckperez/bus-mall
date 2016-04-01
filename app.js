@@ -204,7 +204,7 @@ function handleSeeData(event){
 function showData(){
   grabRecordsFromLocStorage();
   saveRecordsToLocStorage();
-  document.getElementById('myH1').textContent = 'Thanks for contributing. Check out your statistics below!'
+  document.getElementById('myH1').textContent = 'Thanks for contributing. Check out your statistics below!';
   removingEventListenerForTheImages();
   makePercentageArray();
   var dataButton = document.getElementById('dataButton');
