@@ -133,12 +133,6 @@ function handleImageClick(event){
   //Register individual item clicks above
 
   //Log clicks and display count below
-  for (var i = 0; i < imageObjectsArray.length; i++){
-    console.log(imageObjectsArray[i].name + ' has been displayed ' + imageObjectsArray[i].timesDisplayed + ' and clicked ' + imageObjectsArray[i].timesClicked + '.');
-  }
-
-  console.log('Total clicks: ' + totalClicks);
-
   putRandomImagesOnDOM();
 
   if (totalClicks === 10) {
@@ -151,7 +145,7 @@ function handleImageClick(event){
     continueForm.appendChild(continueFormFieldset);
     var continueFormLegend = document.createElement('legend');
     continueFormLegend.setAttribute('id', 'continueFormLegend');
-    continueFormLegend.textContent = 'You have made 25 selections. Would you like to continue playing or see your selection data?';
+    continueFormLegend.textContent = 'You have made ' + totalClicks + ' selections. Would you like to continue playing or see your selection data?';
     continueFormFieldset.appendChild(continueFormLegend);
     var moreButton = document.createElement('button');
     moreButton.setAttribute('id', 'moreButton');
@@ -196,6 +190,8 @@ function removingEventListenerForTheImages() {
 
 //...
 function handleKeepPlaying(event){
+  var moreButton = document.getElementById('moreButton');
+  moreButton.removeEventListener('click', handleKeepPlaying);
   if (totalClicks < 15){
     addingEventListenerForTheImages();
   }
@@ -212,6 +208,12 @@ function showData(){
 
   removingEventListenerForTheImages();
   makePercentageArray();
+  var dataButton = document.getElementById('dataButton');
+  dataButton.removeEventListener('click', handleSeeData);
+
+  var moreButton = document.getElementById('moreButton');
+  moreButton.removeEventListener('click', handleKeepPlaying);
+
   var mainArea = document.getElementById('mainArea');
   var chartCanvas = document.createElement('canvas');
   chartCanvas.setAttribute('id', 'chartCanvas');
